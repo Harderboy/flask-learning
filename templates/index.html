@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>hello world</h1>
+
+参考网址：{{ url_str }} <br>
+
+{# 列表的传入和使用#}
+{{my_list}} <br>
+{{my_list[2]}} <br>
+{{my_list.2}} <br>
+
+{# 字典的传入和使用#}
+{{my_dict}} <br>
+{{my_dict.url}} <br>
+{{my_dict['url']}} <br>
+
+{{my_int}}
+<hr>
+
+{# 控制逻辑和循环 #}
+{% for i in my_list %}
+    {% if i%2==1 %}
+        {{i}} <br>
+    {% endif %}
+{% endfor %}
+
+<hr>
+{# 过滤器 #}
+{{url_str|upper}} <br>
+{{url_str|reverse}} <br>
+
+{# 链式调用 #}
+{# jinja2 中过滤器支持链式调用#}
+{{"hello"|upper|reverse}}
+
+{# 常见内置过滤器 #}
+
+
+
+
+
+</body>
+</html>
