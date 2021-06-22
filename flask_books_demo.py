@@ -120,11 +120,12 @@ def add():
 
     return render_template("book.html", authors=authors, form=author_form)
 
+
 # 点击删除--》网页中删除--》点击需要发送书籍的id给删除书籍的路由——》路由需要接受参数
 @app.route("/delete_book/<book_id>", methods=["POST", "GET"])
 def delete_book(book_id):
     # 1 查询数据库，是否由该ID的书，如果有就删除
-    book=Book.query.get(book_id)
+    book = Book.query.get(book_id)
     # 2.如果有就删除
     if book:
         try:
@@ -134,7 +135,8 @@ def delete_book(book_id):
             print(e)
             flash("删除数据出错")
             db.session.rollback()
-
+    else:
+        flash("书籍找不到")
     # redirect 重定向，需要传入网络/路由地址
     # url_for("index") 需要传入视图函数名，返回视图函数对应的路由地址
     # url_for('delete_book',book_id=book.id) 视图函数带有参数传参方式
@@ -143,19 +145,20 @@ def delete_book(book_id):
     # return redirect("www.runnoob.com")
     # return redirect("/")
     # return redirect(url_for('index'))
-    print(url_for('index'))  # /
+    # print(url_for('index'))  # /
     return redirect(url_for('index'))  # return redirect("/")
+
 
 # 点击删除--》网页中删除--》点击需要发送作者的id给删除作者的路由——》路由需要接受参数
 @app.route("/delete_author/<author_id>", methods=["POST", "GET"])
 def delete_author(author_id):
     # 查询数据库，有该id的作者就删除（先删书再删作者），没有提示错误
     # 1 查数据库
-    author=Author.query.get(author_id)
+    author = Author.query.get(author_id)
     # 2 如果有就删除，先删书再删人
     if author:
         try:
-            # 查询之后直接删除
+            # 查询之后直接删除（批量删除）
             Book.query.filter_by(author_id=author_id).delete()
             # 删除作者
             db.session.delete(author)
@@ -168,6 +171,7 @@ def delete_author(author_id):
         # 3 没有提示错误
         flash("作者找不到")
     return redirect(url_for('index'))
+
 
 if __name__ == "__main__":
     db.drop_all()

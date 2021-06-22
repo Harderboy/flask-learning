@@ -52,8 +52,14 @@ jinja2 中过滤器支持链式调用
 ## 数据库相关
 
 查询
-filter
-filter_by
+filter     类名.字段   ==  更强大 支持多列、操作符等
+filter_by  字段       =   只支持单列查询      
+
+查询之后直接删除（批量删除）
+
+`Book.query.filter_by(author_id=author_id).delete()`
+
+- 此操作是否需要经过数据库（add、commit）
 
 参考链接： 
 - [快速入门](http://docs.jinkan.org/docs/flask/quickstart.html)
